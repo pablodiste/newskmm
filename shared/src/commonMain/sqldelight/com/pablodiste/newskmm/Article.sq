@@ -1,0 +1,16 @@
+
+CREATE TABLE article (
+  id INTEGER NOT NULL,
+  title TEXT NOT NULL
+);
+--INSERT INTO article (id, title) VALUES (15, 'Ryan Getzlaf');
+
+selectAll:
+SELECT *
+FROM article;
+
+insert:
+INSERT INTO article(id, title) VALUES (?, ?);
+
+deleteAll:
+DELETE FROM article;
