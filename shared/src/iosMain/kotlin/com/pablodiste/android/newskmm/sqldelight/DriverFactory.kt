@@ -4,7 +4,7 @@ import com.pablodiste.newskmm.NewsDatabase
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 
-actual class DriverFactory {
+actual class DriverFactory actual constructor() {
     actual fun createDriver(): SqlDriver {
         return NativeSqliteDriver(NewsDatabase.Schema, "test.db")
     }

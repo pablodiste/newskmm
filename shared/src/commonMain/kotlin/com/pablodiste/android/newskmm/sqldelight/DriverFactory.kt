@@ -2,7 +2,7 @@ package com.pablodiste.android.newskmm.sqldelight
 
 import com.squareup.sqldelight.db.SqlDriver
 
-expect class DriverFactory {
+expect class DriverFactory() {
     fun createDriver(): SqlDriver
 }
 
