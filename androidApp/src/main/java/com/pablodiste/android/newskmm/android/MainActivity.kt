@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun NewsList(news: MutableList<Article>) {
+    private fun NewsList(news: List<Article>) {
         LazyColumn {
             items(news) {
                 Row(modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp)) {

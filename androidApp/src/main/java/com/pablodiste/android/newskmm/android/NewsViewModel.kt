@@ -25,7 +25,7 @@ class NewsViewModel: ViewModel(), KoinComponent {
 
     fun getNews() {
         viewModelScope.launch {
-            val response = repository.getBreakingNews()
+            val response = repository.getBreakingNewsWithCache()
             Log.d(TAG, "Results: $response")
             news.value = response
         }
