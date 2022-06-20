@@ -4,10 +4,7 @@ import com.pablodiste.android.newskmm.api.NewsApi
 import com.pablodiste.android.newskmm.repository.NewsRepository
 import com.pablodiste.android.newskmm.sqldelight.DriverFactory
 import com.pablodiste.newskmm.NewsDatabase
-import com.squareup.sqldelight.db.SqlDriver
-import org.kodein.di.DI
-import org.kodein.di.bindSingleton
-import org.kodein.di.instance
+import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -24,4 +21,10 @@ val appModule = module {
     singleOf(::NewsApi)
     singleOf(::NewsRepository)
     singleOf(::DriverFactory)
+}
+
+fun initKoin(){
+    startKoin {
+        modules(appModule)
+    }
 }

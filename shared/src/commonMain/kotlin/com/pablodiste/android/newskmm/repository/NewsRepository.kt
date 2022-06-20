@@ -5,19 +5,35 @@ import com.pablodiste.android.newskmm.domain.Article
 import com.pablodiste.android.newskmm.domain.NewsResponse
 import com.pablodiste.android.newskmm.domain.Response
 import com.pablodiste.newskmm.NewsDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class NewsRepository(val newsApi: NewsApi, val newsDatabase: NewsDatabase) {
 
-    val newsQueries = newsDatabase.articleQueries
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private val newsQueries = newsDatabase.articleQueries
+    val state = MutableStateFlow<Response<NewsResponse>>(Response.Success(NewsResponse(emptyList())))
 
     suspend fun getBreakingNews(): Response<NewsResponse> {
-        return newsApi.getBreakingNews()
+        val breakingNews = newsApi.getBreakingNews()
+        if (breakingNews is Response.Success) {
+            breakingNews.data.articles.map { it.generateId() }
+        }
+        return breakingNews
+    }
+
+    fun fetchBreakingNews() {
+        coroutineScope.launch {
+            val breakingNews = getBreakingNews()
+            state.value = breakingNews
+        }
     }
 
     suspend fun getBreakingNewsWithCache(): Response<NewsResponse> {
         val breakingNews = getBreakingNews()
         if (breakingNews is Response.Success) {
-            breakingNews.data.articles.map { it.generateId() }
             cache(breakingNews.data.articles)
         }
         return breakingNews

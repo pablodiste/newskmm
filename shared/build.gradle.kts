@@ -11,6 +11,7 @@ val ktorVersion = "2.0.0"
 val coroutineVersion = "1.6.1"
 
 kotlin {
+    /*
     targets {
         val sdkName: String? = System.getenv("SDK_NAME")
         val isiOSDevice = sdkName.orEmpty().startsWith("iphoneos")
@@ -21,6 +22,9 @@ kotlin {
         }
         android()
     }
+     */
+    iosSimulatorArm64("ios")
+    android()
 
     cocoapods {
         summary = "Some description for the Shared Module"
@@ -60,8 +64,10 @@ kotlin {
 
         }
         val iosMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 implementation("com.squareup.sqldelight:native-driver:1.5.3")
+                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
             }
         }
         val iosTest by getting {
